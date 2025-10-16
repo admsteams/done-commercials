@@ -55,7 +55,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [   
-            os.path.join(BASE_DIR, '../frontend/commercials/build' )],
+            os.path.join(BASE_DIR, 'templates' )],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,12 +79,16 @@ DATABASES = {
 
 # Static files
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # For collectstatic
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '../frontend/commercials/build/static'),
-    os.path.join(BASE_DIR, '../frontend/commercials/build'),  
+    os.path.join(BASE_DIR, 'static/build/static'),  # Your React build files go here
+    os.path.join(BASE_DIR, 'static'),  
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+
+# WhiteNoise configuration for static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
