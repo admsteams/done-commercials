@@ -1,29 +1,19 @@
-#!/usr/bin/env bash
-set -o errexit
+#!/bin/bash
+set -e
 
-echo "=== Starting build process ==="
-
-# Install Python dependencies
-echo "Installing Python dependencies..."
+echo "=== Installing dependencies ==="
 pip install -r requirements.txt
 
-# Build React frontend
-echo "Building React frontend..."
+echo "=== Building React app ==="
 npm install
 npm run build
 
-# Create static directory structure
-echo "Creating static directory structure..."
+echo "=== Setting up static files ==="
 mkdir -p static
-mkdir -p staticfiles
-
-# Copy React build to static directory
-echo "Copying React build to static directory..."
 cp -r build/* static/
 
-# Collect static files
-echo "Collecting static files..."
+echo "=== Collecting static files ==="
 python manage.py collectstatic --noinput --clear
 python manage.py migrate
 
-echo "=== Build completed successfully ==="
+echo "=== Build complete ==="
