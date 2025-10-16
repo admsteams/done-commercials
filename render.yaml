@@ -12,13 +12,9 @@ services:
         generateValue: true
       - key: PYTHON_VERSION
         value: "3.11.0"
-      - key: WEB_CONCURRENCY
-        value: 4
       - key: DATABASE_URL
         fromDatabase:
           name: done-commercials-db
           property: connectionString
-
-databases:
-  - name: done-commercials-db
-    plan: free
+      - key: ALLOWED_HOSTS  # Add this line
+        value: "done-commercials.onrender.com,.onrender.com,localhost,127.0.0.1"  # Add this line
