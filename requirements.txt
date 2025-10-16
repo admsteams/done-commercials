@@ -1,0 +1,14 @@
+Django
+djangorestframework
+django-cors-headers
+python-dotenv
+Pillow
+whitenoise
+
+python-decouple
+psycopg2-binary
+
+dj-database-url
+gunicorn
+
+#react ---> npm install framer-motion lucide-react axios
