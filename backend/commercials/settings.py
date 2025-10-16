@@ -21,8 +21,8 @@ ALLOWED_HOSTS = [
     'done-commercials.onrender.com',
     'localhost',
     '127.0.0.1',
-    '.onrender.com',  # This allows all subdomains of onrender.com
-])
+    '.onrender.com',  
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -55,8 +55,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [   
-            os.path.join(BASE_DIR, '../frontend/commercials/build'),
-        ],
+            os.path.join(BASE_DIR, '../frontend/commercials/build' )],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
