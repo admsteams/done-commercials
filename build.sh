@@ -9,23 +9,21 @@ pip install -r requirements.txt
 
 # Build React frontend
 echo "Building React frontend..."
-cd frontend/commercials
 npm install
 npm run build
 
-# Create static directory in backend
-echo "Creating static directory..."
-cd ../..
-mkdir -p backend/static
+# Create static directory structure
+echo "Creating static directory structure..."
+mkdir -p static
+mkdir -p staticfiles
 
-# MANUAL COPY: Copy entire React build to backend/static
+# Copy React build to static directory
 echo "Copying React build to static directory..."
-cp -r frontend/commercials/build/* backend/static/
+cp -r build/* static/
 
 # Collect static files
 echo "Collecting static files..."
-cd backend
-python manage.py collectstatic --noinput
+python manage.py collectstatic --noinput --clear
 python manage.py migrate
 
 echo "=== Build completed successfully ==="
