@@ -3,7 +3,7 @@ services:
     name: done-commercials
     env: python
     plan: free
-    buildCommand: "./build.sh"
+    buildCommand: "chmod +x build.sh && ./build.sh"
     startCommand: "cd backend && gunicorn commercials.wsgi:application --bind 0.0.0.0:$PORT"
     envVars:
       - key: DEBUG
@@ -16,5 +16,15 @@ services:
         fromDatabase:
           name: done-commercials-db
           property: connectionString
-      - key: ALLOWED_HOSTS  # Add this line
-        value: "done-commercials.onrender.com,.onrender.com,localhost,127.0.0.1"  # Add this line
+      - key: ALLOWED_HOSTS
+        value: "done-commercials.onrender.com,.onrender.com,localhost,127.0.0.1"
+      - key: EMAIL_HOST_USER
+        value: "ailogictools@gmail.com"
+      - key: EMAIL_HOST_PASSWORD
+        value: "huynsyprosfoblzz"
+      - key: DEFAULT_FROM_EMAIL
+        value: "ailogictools@gmail.com"
+
+databases:
+  - name: done-commercials-db
+    plan: free

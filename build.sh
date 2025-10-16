@@ -1,27 +1,31 @@
 #!/usr/bin/env bash
 set -o errexit
 
+echo "=== Starting build process ==="
+
+# Install Python dependencies
 echo "Installing Python dependencies..."
 pip install -r requirements.txt
 
+# Build React frontend
 echo "Building React frontend..."
 cd frontend/commercials
 npm install
 npm run build
 
-echo "Copying React build to Django..."
+# Create static directory in backend
+echo "Creating static directory..."
 cd ../..
-# Create directories if they don't exist
-mkdir -p backend/templates
 mkdir -p backend/static
 
-# Copy React build to Django
-cp -r frontend/commercials/build/* backend/templates/
-cp -r frontend/commercials/build/static/* backend/static/
+# MANUAL COPY: Copy entire React build to backend/static
+echo "Copying React build to static directory..."
+cp -r frontend/commercials/build/* backend/static/
 
-echo "Running Django collectstatic..."
+# Collect static files
+echo "Collecting static files..."
 cd backend
-python manage.py collectstatic --noinput --clear
+python manage.py collectstatic --noinput
 python manage.py migrate
 
-echo "Build completed successfully!"
+echo "=== Build completed successfully ==="
