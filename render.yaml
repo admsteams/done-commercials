@@ -16,8 +16,5 @@ services:
         fromDatabase:
           name: done-commercials-db
           property: connectionString
-    staticPublishPath: ./frontend/commercials/build
-
-databases:
-  - name: done-commercials-db
-    plan: free
+      - key: ALLOWED_HOSTS  # Add this line
+        value: "done-commercials.onrender.com,.onrender.com,localhost,127.0.0.1"  # Add this line
