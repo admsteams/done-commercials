@@ -13,19 +13,15 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-$yy495o*xkl^u_i010dw8
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 # Fixed ALLOWED_HOSTS configuration
-ALLOWED_HOSTS = []
 
-# Add Render host and other allowed hosts
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-# Add your specific domain and other hosts
-ALLOWED_HOSTS.extend([
+
+# Replace with:
+ALLOWED_HOSTS = [
     'done-commercials.onrender.com',
-    '.onrender.com',  # Allows any subdomain of onrender.com
     'localhost',
     '127.0.0.1',
+    '.onrender.com',  # This allows all subdomains of onrender.com
 ])
 
 # Application definition
