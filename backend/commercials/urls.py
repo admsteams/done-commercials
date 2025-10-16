@@ -7,12 +7,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('main.urls')),
-    # Catch-all for React routes
-    re_path(r'^.*', TemplateView.as_view(template_name='index.html')),
+    # Catch-all for React routes - serve index.html from static directory
+    re_path(r'^.*$', TemplateView.as_view(template_name='index.html')),
 ]
 
+# Serve static files in development
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

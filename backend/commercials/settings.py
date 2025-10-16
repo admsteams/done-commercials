@@ -1,30 +1,24 @@
-
+"""
+Django settings for commercials project.
+"""
 
 from pathlib import Path
 import os
 import dj_database_url
-from datetime import timedelta
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
+# Security
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-$yy495o*xkl^u_i010dw82c#v^zo(4#f$2@qnob%jfg3o7)8da')
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
-
-# Fixed ALLOWED_HOSTS configuration
-
-
-
-# Replace with:
 ALLOWED_HOSTS = [
     'done-commercials.onrender.com',
     'localhost',
     '127.0.0.1',
-    '.onrender.com',  
+    '.onrender.com',
 ]
 
-# Application definition
+# Applications
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -51,11 +45,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'commercials.urls'
 
+# Templates - Point to static directory where React build is copied
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [   
-            os.path.join(BASE_DIR, 'templates' )],
+        'DIRS': [os.path.join(BASE_DIR, 'static')],  # React build copied here
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,40 +71,23 @@ DATABASES = {
     )
 }
 
-# Static files
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Extra places for collectstatic to find static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # For collectstatic
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # This is where your React build goes
+    os.path.join(BASE_DIR, 'static'),  # Where React build is manually copied
 ]
 
-# WhiteNoise configuration
+# WhiteNoise configuration for static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://done-commercials.onrender.com",
 ]
 CORS_ALLOW_ALL_ORIGINS = True
-
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ]
-}
-
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:3000',
-    'https://done-commercials.onrender.com'
-]
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -128,19 +105,20 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Email settings
+# Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
-SERVER_EMAIL = os.environ.get('SERVER_EMAIL', EMAIL_HOST_USER)
-EMAIL_TIMEOUT = 30
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'ailogictools@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'huynsyprosfoblzz')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'ailogictools@gmail.com')
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -3,9 +3,7 @@ services:
     name: done-commercials
     env: python
     plan: free
-    buildCommand: |
-      chmod +x build.sh
-      ./build.sh
+    buildCommand: "chmod +x build.sh && ./build.sh"
     startCommand: "cd backend && gunicorn commercials.wsgi:application --bind 0.0.0.0:$PORT"
     envVars:
       - key: DEBUG
