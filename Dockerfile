@@ -7,35 +7,23 @@ ENV PORT=8080
 # Set work directory
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies (remove nodejs and npm since we don't need them)
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
-    nodejs \
-    npm \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy project
+# Copy the entire project (including pre-built static files)
 COPY . .
 
-# Build React frontend
-WORKDIR /app/frontend/commercials
-RUN npm install
-RUN npm run build
-
-# Go back to root directory
-WORKDIR /app
-
-# Create static directory and copy React build
-RUN mkdir -p backend/static
-RUN cp -r frontend/commercials/build/* backend/static/
-
-# Collect static files and migrate
+# Set working directory to backend
 WORKDIR /app/backend
+
+# Collect static files
 RUN python manage.py collectstatic --noinput
 
 # Expose the port
