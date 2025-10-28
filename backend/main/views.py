@@ -12,7 +12,7 @@ def contact_submit(request):
         data = json.loads(request.body)
         
         # Send email notification
-        email_subject = f"New Contact Form Submission from {data.get('name', 'Unknown')}"
+        email_subject = f"Done Commercials - New Contact Form Submission from {data.get('name', 'Unknown')}"
         email_body = f"""
         New contact form submission:
 
@@ -31,7 +31,7 @@ def contact_submit(request):
             email_subject,
             email_body,
             settings.DEFAULT_FROM_EMAIL,
-            [settings.EMAIL_HOST_USER],  # Send to yourself
+            [settings.INQUIRY_EMAIL],  # Send to yourself
             fail_silently=False,
         )
 
