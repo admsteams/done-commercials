@@ -5,6 +5,7 @@ Django settings for commercials project.
 from pathlib import Path
 import os
 import dj_database_url
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -12,11 +13,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-$yy495o*xkl^u_i010dw82c#v^zo(4#f$2@qnob%jfg3o7)8da')
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 ALLOWED_HOSTS = [
-    'done-commercials.onrender.com',
+    # 'done-commercials.onrender.com',
     'localhost',
     '127.0.0.1',
-    '.onrender.com',
+    '.run.app',
 ]
+
+
+CUSTOM_DOMAIN = config('CUSTOM_DOMAIN', default=None)
+if CUSTOM_DOMAIN:
+    ALLOWED_HOSTS.append(CUSTOM_DOMAIN)
+
 
 # Applications
 INSTALLED_APPS = [
@@ -63,13 +70,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'commercials.wsgi.application'
 
-# Database
+# Production Database
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',
-        conn_max_age=600
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        conn_health_checks=True,
     )
 }
+
+
+
+# Database
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='sqlite:///db.sqlite3',
+#         conn_max_age=600
+#     )
+# }
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
@@ -120,5 +138,22 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
+
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+
+
+
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
