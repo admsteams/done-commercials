@@ -2,36 +2,43 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 import json
-from .models import ContactSubmission
 from django.core.mail import send_mail
+from django.conf import settings
 
 @csrf_exempt
 @require_http_methods(["POST"])
 def contact_submit(request):
     try:
         data = json.loads(request.body)
-        submission = ContactSubmission.objects.create(
-            name=data.get('name'),
-            email=data.get('email'),
-            phone=data.get('phone'),
-            company=data.get('company', ''),
-            message=data.get('message'),
-            service_interest=data.get('serviceInterest', '')
-        )
-        email_subject = "New Contact Submission"
+        
+        # Send email notification
+        email_subject = f"New Contact Form Submission from {data.get('name', 'Unknown')}"
         email_body = f"""
-        Name: {submission.name}
-        Email: {submission.email}
-        Phone: {submission.phone}
-        Company: {submission.company}
-        Message: {submission.message}
-        Service Interest: {submission.service_interest}
-        """
-        send_mail(email_subject, email_body, 'ravikirankasabe@gmail.com', ['']    )
+        New contact form submission:
 
-        return JsonResponse({'success': True, 'message': 'Thank you for your submission!'})
+        Name: {data.get('name')}
+        Email: {data.get('email')}
+        Phone: {data.get('phone')}
+        Company: {data.get('company', 'Not provided')}
+        Service Interest: {data.get('service_interest', 'Not specified')}
+        
+        Message:
+        {data.get('message')}
+        """
+        
+        # Send to the configured email
+        send_mail(
+            email_subject,
+            email_body,
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.EMAIL_HOST_USER],  # Send to yourself
+            fail_silently=False,
+        )
+
+        return JsonResponse({'success': True, 'message': 'Thank you for your submission! We will contact you soon.'})
     except Exception as e:
-        return JsonResponse({'success': False, 'message': 'Error submitting form'})
+        print(f"Error sending email: {e}")
+        return JsonResponse({'success': False, 'message': 'Error submitting form. Please try again.'})
 
 def home(request):
     return JsonResponse({'message': 'Done Commercials API'})

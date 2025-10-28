@@ -5,7 +5,6 @@ Django settings for commercials project.
 from pathlib import Path
 import os
 import dj_database_url
-from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +19,7 @@ ALLOWED_HOSTS = [
 ]
 
 
-CUSTOM_DOMAIN = config('CUSTOM_DOMAIN', default=None)
+CUSTOM_DOMAIN = os.environ.get('CUSTOM_DOMAIN', default=None)
 if CUSTOM_DOMAIN:
     ALLOWED_HOSTS.append(CUSTOM_DOMAIN)
 
@@ -131,6 +130,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'ailogictools@gmail.com')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'huynsyprosfoblzz')
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'ailogictools@gmail.com')
+INQUIRY_EMAIL = os.environ.get('INQUIRY_EMAIL', 'info@donecommercial.ca')
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
