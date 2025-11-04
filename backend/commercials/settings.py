@@ -17,6 +17,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '.run.app',
     'donecommercial.ca',
+    'https://donecommercial.ca/'
 ]
 
 
@@ -100,12 +101,12 @@ STATICFILES_DIRS = [
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # CORS settings
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
-CORS_ALLOW_ALL_ORIGINS = True
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+# ]
+# CORS_ALLOW_ALL_ORIGINS = True
+# CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -141,16 +142,16 @@ USE_TZ = True
 
 
 
-if not DEBUG:
-    SECURE_SSL_REDIRECT = True
-    SECURE_HSTS_SECONDS = 31536000
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
+# if not DEBUG:
+#     SECURE_SSL_REDIRECT = True
+#     SECURE_HSTS_SECONDS = 31536000
+#     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#     SECURE_HSTS_PRELOAD = True
+#     SESSION_COOKIE_SECURE = True
+#     CSRF_COOKIE_SECURE = True
     
-    # Important for Cloud Run
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#     # Important for Cloud Run
+#     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 
