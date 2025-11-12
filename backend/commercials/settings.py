@@ -17,7 +17,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '.run.app',
     'donecommercial.ca',
-    'https://donecommercial.ca/'
+    'www.donecommercial.ca',
 ]
 
 
